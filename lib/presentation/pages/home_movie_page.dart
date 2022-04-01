@@ -47,6 +47,14 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               onTap: () {
                 Navigator.pop(context);
               },
+              selected: true,
+            ),
+            ListTile(
+              leading: Icon(Icons.tv),
+              title: Text('TV Show'),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               leading: Icon(Icons.save_alt),

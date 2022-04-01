@@ -1,7 +1,10 @@
 import 'package:ditonton/data/models/movie_table.dart';
+import 'package:ditonton/data/models/tv_model.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
+import 'package:ditonton/domain/entities/season.dart';
+import 'package:ditonton/domain/entities/tv_detail.dart';
 
 final testMovie = Movie(
   adult: false,
@@ -18,6 +21,7 @@ final testMovie = Movie(
   video: false,
   voteAverage: 7.2,
   voteCount: 13507,
+  isMovie: true,
 );
 
 final testMovieList = [testMovie];
@@ -37,11 +41,53 @@ final testMovieDetail = MovieDetail(
   voteCount: 1,
 );
 
+final testTv = TvModel(
+  posterPath: "posterPath",
+  popularity: 1.0,
+  id: 1,
+  backdropPath: "backdropPath",
+  voteAverage: 1.0,
+  overview: "overview",
+  firstAirDate: "firstAirDate",
+  originCountry: ["originCountry"],
+  genreIds: [1, 2, 3],
+  originalLanguage: "originalLanguage",
+  voteCount: 1,
+  name: "name",
+  originalName: "originalName",
+);
+
+final testTvList = [testTv];
+
+final testTvDetail = TvDetail(
+  backdropPath: "backdropPath",
+  firstAirDate: "firstAirDate",
+  lastAirDate: "lastAirDate",
+  genres: [Genre(id: 1, name: 'Action')],
+  id: 1,
+  seasons: [
+    Season(
+      name: "name",
+      overview: "overview",
+      posterPath: "posterPath",
+      episodeCount: 1,
+      airDate: "airDate",
+    )
+  ],
+  name: "name",
+  originalName: "originalName",
+  overview: "overview",
+  posterPath: "posterPath",
+  voteAverage: 1.0,
+  voteCount: 1,
+);
+
 final testWatchlistMovie = Movie.watchlist(
   id: 1,
   title: 'title',
   posterPath: 'posterPath',
   overview: 'overview',
+  isMovie: true,
 );
 
 final testMovieTable = MovieTable(
@@ -49,6 +95,15 @@ final testMovieTable = MovieTable(
   title: 'title',
   posterPath: 'posterPath',
   overview: 'overview',
+  isMovie: true,
+);
+
+final testMovieTableTv = MovieTable(
+  id: 1,
+  title: 'name',
+  posterPath: 'posterPath',
+  overview: 'overview',
+  isMovie: false,
 );
 
 final testMovieMap = {
@@ -56,4 +111,5 @@ final testMovieMap = {
   'overview': 'overview',
   'posterPath': 'posterPath',
   'title': 'title',
+  'isMovie': true,
 };

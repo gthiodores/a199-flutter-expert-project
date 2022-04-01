@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
   static DatabaseHelper? _databaseHelper;
+
   DatabaseHelper._instance() {
     _databaseHelper = this;
   }
@@ -26,7 +27,12 @@ class DatabaseHelper {
     final path = await getDatabasesPath();
     final databasePath = '$path/ditonton.db';
 
-    var db = await openDatabase(databasePath, version: 1, onCreate: _onCreate);
+    var db = await openDatabase(
+      databasePath,
+      version: 2,
+      onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
+    );
     return db;
   }
 
@@ -36,9 +42,19 @@ class DatabaseHelper {
         id INTEGER PRIMARY KEY,
         title TEXT,
         overview TEXT,
-        posterPath TEXT
+        posterPath TEXT,
+        isMovie INTEGER,
       );
     ''');
+  }
+
+  void _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion == 1 && newVersion == 2) {
+      await db.execute('''
+      ALTER TABLE $_tblWatchlist ADD COLUMN
+      isMovie INTEGER DEFAULT 1;
+    ''');
+    }
   }
 
   Future<int> insertWatchlist(MovieTable movie) async {

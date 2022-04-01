@@ -65,6 +65,7 @@ void main() {
     video: false,
     voteAverage: 1,
     voteCount: 1,
+    isMovie: true,
   );
   final tMovies = <Movie>[tMovie];
 
@@ -212,6 +213,19 @@ void main() {
           .thenAnswer((_) async => false);
       // act
       await provider.addWatchlist(testMovieDetail);
+      // assert
+      expect(provider.watchlistMessage, 'Failed');
+      expect(listenerCallCount, 1);
+    });
+
+    test('should update watchlist message when remove watchlist failed', () async {
+      // arrange
+      when(mockRemoveWatchlist.execute(testMovieDetail))
+          .thenAnswer((_) async => Left(DatabaseFailure('Failed')));
+      when(mockGetWatchlistStatus.execute(testMovieDetail.id))
+          .thenAnswer((_) async => false);
+      // act
+      await provider.removeFromWatchlist(testMovieDetail);
       // assert
       expect(provider.watchlistMessage, 'Failed');
       expect(listenerCallCount, 1);

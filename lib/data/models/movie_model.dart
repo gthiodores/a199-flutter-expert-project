@@ -79,6 +79,7 @@ class MovieModel extends Equatable {
       video: this.video,
       voteAverage: this.voteAverage,
       voteCount: this.voteCount,
+      isMovie: true,
     );
   }
 
