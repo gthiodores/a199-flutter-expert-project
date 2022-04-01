@@ -31,7 +31,7 @@ void main() {
     test('should return list of TvModel when the response code is 200',
         () async {
       // arrange
-      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/tv_on_the_air?$API_KEY')))
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/on_the_air?$API_KEY')))
           .thenAnswer((_) async =>
               http.Response(readJson("dummy_data/tv_now_playing.json"), 200));
       // act
@@ -43,7 +43,7 @@ void main() {
     test('should return ServerException when the response code is not 200',
         () async {
       // arrange
-      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/tv_on_the_air?$API_KEY')))
+      when(mockHttpClient.get(Uri.parse('$BASE_URL/tv/on_the_air?$API_KEY')))
           .thenAnswer((_) async => http.Response("Not Found", 404));
       // act
       final call = dataSource.getNowPlayingTv();
