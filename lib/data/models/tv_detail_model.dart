@@ -5,8 +5,8 @@ import 'package:equatable/equatable.dart';
 
 class TvDetailResponse extends Equatable {
   final String? backdropPath;
-  final String firstAirDate;
-  final String lastAirDate;
+  final String? firstAirDate;
+  final String? lastAirDate;
   final List<GenreModel> genres;
   final int id;
   final List<SeasonModel> seasons;
@@ -52,8 +52,8 @@ class TvDetailResponse extends Equatable {
 
   TvDetail toEntity() => TvDetail(
         backdropPath: backdropPath,
-        firstAirDate: firstAirDate,
-        lastAirDate: lastAirDate,
+        firstAirDate: firstAirDate ?? "Not aired",
+        lastAirDate: lastAirDate ?? "Not aired",
         genres: genres.map((element) => element.toEntity()).toList(),
         id: id,
         seasons: seasons.map((element) => element.toEntity()).toList(),
