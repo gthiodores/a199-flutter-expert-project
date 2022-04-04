@@ -111,5 +111,5 @@ final testMovieMap = {
   'overview': 'overview',
   'posterPath': 'posterPath',
   'title': 'title',
-  'isMovie': true,
+  'isMovie': 1,
 };

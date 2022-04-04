@@ -38,12 +38,12 @@ class DatabaseHelper {
 
   void _onCreate(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE  $_tblWatchlist (
+      CREATE TABLE $_tblWatchlist (
         id INTEGER PRIMARY KEY,
         title TEXT,
         overview TEXT,
         posterPath TEXT,
-        isMovie INTEGER,
+        isMovie INTEGER
       );
     ''');
   }

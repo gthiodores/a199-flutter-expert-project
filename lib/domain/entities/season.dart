@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class Season extends Equatable {
   final String name;
   final String overview;
-  final String posterPath;
+  final String? posterPath;
   final int episodeCount;
   final String airDate;
 

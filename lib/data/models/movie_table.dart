@@ -35,17 +35,19 @@ class MovieTable extends Equatable {
       );
 
   factory MovieTable.fromMap(Map<String, dynamic> map) => MovieTable(
-      id: map['id'],
-      title: map['title'],
-      posterPath: map['posterPath'],
-      overview: map['overview'],
-      isMovie: map['isMovie']);
+        id: map['id'],
+        title: map['title'],
+        posterPath: map['posterPath'],
+        overview: map['overview'],
+        isMovie: map['isMovie'] == 1 ? true : false,
+      );
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
         'posterPath': posterPath,
         'overview': overview,
+        'isMovie': isMovie ? 1 : 0
       };
 
   Movie toEntity() => Movie.watchlist(
