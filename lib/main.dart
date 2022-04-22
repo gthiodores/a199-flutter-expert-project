@@ -1,6 +1,9 @@
 import 'package:about/about.dart';
 import 'package:core/common/utils.dart';
 import 'package:core/core.dart';
+import 'package:core/presentation/bloc/movie_now_playing/movie_now_playing_bloc.dart';
+import 'package:core/presentation/bloc/movie_popular/movie_popular_bloc.dart';
+import 'package:core/presentation/bloc/movie_top_rated/movie_top_rated_bloc.dart';
 import 'package:core/presentation/pages/home_movie_page.dart';
 import 'package:core/presentation/pages/home_tv_page.dart';
 import 'package:core/presentation/pages/movie_detail_page.dart';
@@ -77,7 +80,19 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.locator<SearchTvBloc>(),
-        )
+        ),
+        BlocProvider(
+          create: (_) =>
+              di.locator<MovieNowPlayingBloc>()..add(MovieNowPlayingInit()),
+        ),
+        BlocProvider(
+          create: (_) =>
+              di.locator<MoviePopularBloc>()..add(MoviePopularInit()),
+        ),
+        BlocProvider(
+          create: (_) =>
+              di.locator<MovieTopRatedBloc>()..add(MovieTopRatedInit()),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -91,17 +106,17 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
-            case '/home':
+            case HOME_ROUTE:
               return MaterialPageRoute(builder: (_) => HomeMoviePage());
-            case HomeTvPage.ROUTE_NAME:
+            case HOME_TV_ROUTE:
               return MaterialPageRoute(builder: (_) => HomeTvPage());
-            case PopularMoviesPage.ROUTE_NAME:
+            case POPULAR_MOVIE_ROUTE:
               return CupertinoPageRoute(builder: (_) => PopularMoviesPage());
-            case PopularTvPage.ROUTE_NAME:
+            case POPULAR_TV_ROUTE:
               return CupertinoPageRoute(builder: (_) => PopularTvPage());
-            case TopRatedMoviesPage.ROUTE_NAME:
+            case TOP_RATED_MOVIE_ROUTE:
               return CupertinoPageRoute(builder: (_) => TopRatedMoviesPage());
-            case TopRatedTvPage.ROUTE_NAME:
+            case TOP_RATED_TV_ROUTE:
               return CupertinoPageRoute(builder: (_) => TopRatedTvPage());
             case MovieDetailPage.ROUTE_NAME:
               final id = settings.arguments as int;

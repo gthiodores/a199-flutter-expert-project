@@ -1,6 +1,3 @@
-import 'package:core/presentation/pages/popular_movies_page.dart';
-import 'package:core/presentation/pages/top_rated_movies_page.dart';
-import 'package:core/presentation/pages/watchlist_movies_page.dart';
 import 'package:core/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,23 +7,7 @@ import '../../utils/state_enum.dart';
 import '../provider/tv_list_notifier.dart';
 import 'home_movie_page.dart';
 
-class HomeTvPage extends StatefulWidget {
-  static const ROUTE_NAME = "/home_tv";
-
-  @override
-  _HomeTvState createState() => _HomeTvState();
-}
-
-class _HomeTvState extends State<HomeTvPage> {
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() => Provider.of<TvListNotifier>(context, listen: false)
-      ..fetchNowPlayingTv()
-      ..fetchPopularTv()
-      ..fetchTopRatedTv());
-  }
-
+class HomeTvPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +40,7 @@ class _HomeTvState extends State<HomeTvPage> {
               leading: const Icon(Icons.save_alt),
               title: const Text('Watchlist'),
               onTap: () {
-                Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
+                Navigator.pushNamed(context, WATCH_LIST_ROTUE);
               },
             ),
             ListTile(
@@ -107,8 +88,7 @@ class _HomeTvState extends State<HomeTvPage> {
               }),
               _buildSubHeading(
                 title: 'Popular',
-                onTap: () =>
-                    Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
+                onTap: () => Navigator.pushNamed(context, POPULAR_TV_ROUTE),
               ),
               Consumer<TvListNotifier>(builder: (context, data, child) {
                 final state = data.popularMoviesState;
@@ -124,8 +104,7 @@ class _HomeTvState extends State<HomeTvPage> {
               }),
               _buildSubHeading(
                 title: 'Top Rated',
-                onTap: () =>
-                    Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
+                onTap: () => Navigator.pushNamed(context, TOP_RATED_TV_ROUTE),
               ),
               Consumer<TvListNotifier>(builder: (context, data, child) {
                 final state = data.topRatedMoviesState;

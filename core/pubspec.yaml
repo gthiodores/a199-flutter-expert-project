@@ -21,13 +21,15 @@ dependencies:
   path_provider: ^2.0.2
   equatable: ^2.0.3
   google_fonts: ^2.1.0
+  flutter_bloc: ^8.0.1
 
 
 dev_dependencies:
-  mockito: ^5.0.8
-  build_runner: ^2.0.4
   flutter_test:
     sdk: flutter
+  mockito: ^5.0.8
+  build_runner: ^2.0.4
+  bloc_test: ^9.0.3
   flutter_lints: ^1.0.0
 
 # For information on the generic Dart part of this file, see the

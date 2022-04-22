@@ -22,6 +22,9 @@ import 'package:core/domain/usecases/remove_watchlist.dart';
 import 'package:core/domain/usecases/remove_watchlist_tv.dart';
 import 'package:core/domain/usecases/save_watchlist.dart';
 import 'package:core/domain/usecases/save_watchlist_tv.dart';
+import 'package:core/presentation/bloc/movie_now_playing/movie_now_playing_bloc.dart';
+import 'package:core/presentation/bloc/movie_popular/movie_popular_bloc.dart';
+import 'package:core/presentation/bloc/movie_top_rated/movie_top_rated_bloc.dart';
 import 'package:core/presentation/provider/movie_detail_notifier.dart';
 import 'package:core/presentation/provider/movie_list_notifier.dart';
 import 'package:core/presentation/provider/popular_movies_notifier.dart';
@@ -115,6 +118,15 @@ void init() {
   );
   locator.registerFactory(
     () => SearchTvBloc(locator()),
+  );
+  locator.registerFactory(
+    () => MovieNowPlayingBloc(locator()),
+  );
+  locator.registerFactory(
+    () => MoviePopularBloc(locator()),
+  );
+  locator.registerFactory(
+    () => MovieTopRatedBloc(locator()),
   );
 
   // use case
