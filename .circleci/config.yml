@@ -23,6 +23,13 @@ jobs:
     steps:
       - checkout
       - run: flutter doctor
+      - run: cd core
+      - run: flutter test
+      - run: cd ../
+      - run: cd about
+      - run: flutter test
+      - run: cd ../
+      - run: cd search
       - run: flutter test
 
 # Invoke jobs via workflows
