@@ -26,6 +26,9 @@ import 'package:core/presentation/bloc/movie_detail_bloc/movie_detail_bloc.dart'
 import 'package:core/presentation/bloc/movie_now_playing/movie_now_playing_bloc.dart';
 import 'package:core/presentation/bloc/movie_popular/movie_popular_bloc.dart';
 import 'package:core/presentation/bloc/movie_top_rated/movie_top_rated_bloc.dart';
+import 'package:core/presentation/bloc/tv_now_playing/tv_now_playing_bloc.dart';
+import 'package:core/presentation/bloc/tv_popular/tv_popular_bloc.dart';
+import 'package:core/presentation/bloc/tv_top_rated/tv_top_rated_bloc.dart';
 import 'package:core/presentation/provider/movie_detail_notifier.dart';
 import 'package:core/presentation/provider/movie_list_notifier.dart';
 import 'package:core/presentation/provider/popular_movies_notifier.dart';
@@ -132,6 +135,15 @@ void init() {
   locator.registerFactory(
     () =>
         MovieDetailBloc(locator(), locator(), locator(), locator(), locator()),
+  );
+  locator.registerFactory(
+    () => TvNowPlayingBloc(locator()),
+  );
+  locator.registerFactory(
+    () => TvPopularBloc(locator()),
+  );
+  locator.registerFactory(
+    () => TvTopRatedBloc(locator()),
   );
 
   // use case

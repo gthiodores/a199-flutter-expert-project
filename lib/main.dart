@@ -5,6 +5,9 @@ import 'package:core/presentation/bloc/movie_detail_bloc/movie_detail_bloc.dart'
 import 'package:core/presentation/bloc/movie_now_playing/movie_now_playing_bloc.dart';
 import 'package:core/presentation/bloc/movie_popular/movie_popular_bloc.dart';
 import 'package:core/presentation/bloc/movie_top_rated/movie_top_rated_bloc.dart';
+import 'package:core/presentation/bloc/tv_now_playing/tv_now_playing_bloc.dart';
+import 'package:core/presentation/bloc/tv_popular/tv_popular_bloc.dart';
+import 'package:core/presentation/bloc/tv_top_rated/tv_top_rated_bloc.dart';
 import 'package:core/presentation/pages/home_movie_page.dart';
 import 'package:core/presentation/pages/home_tv_page.dart';
 import 'package:core/presentation/pages/movie_detail_page.dart';
@@ -96,6 +99,16 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.locator<MovieDetailBloc>(),
+        ),
+        BlocProvider(
+          create: (_) =>
+              di.locator<TvNowPlayingBloc>()..add(TvNowPlayingInit()),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvPopularBloc>()..add(TvPopularInit()),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvTopRatedBloc>()..add(TvTopRatedInit()),
         ),
       ],
       child: MaterialApp(
