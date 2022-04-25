@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:core/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/movie.dart';
 import '../../styles/text_styles.dart';
 import '../../utils/constants.dart';
-import '../pages/movie_detail_page.dart';
 import '../pages/tv_detail_page.dart';
 
 class MovieCard extends StatelessWidget {
@@ -21,7 +21,7 @@ class MovieCard extends StatelessWidget {
           if (movie.isMovie) {
             Navigator.pushNamed(
               context,
-              MovieDetailPage.ROUTE_NAME,
+              MOVIE_DETAIL_ROUTE,
               arguments: movie.id,
             );
           } else {

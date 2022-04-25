@@ -21,7 +21,7 @@ class MovieDetailError extends MovieDetailState {
 class MovieDetailLoaded extends MovieDetailState {
   final MovieDetail movie;
   final bool isFavorite;
-  final List<Movie> recommendations;
+  final List<Movie>? recommendations;
   final String? message;
 
   const MovieDetailLoaded(
@@ -39,7 +39,7 @@ class MovieDetailLoaded extends MovieDetailState {
       MovieDetailLoaded(
         movie,
         isFavorite ?? this.isFavorite,
-        recommendations ?? this.recommendations,
+        recommendations,
         message,
       );
 

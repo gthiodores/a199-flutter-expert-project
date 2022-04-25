@@ -33,18 +33,18 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
 
       final detail = await getDetail.execute(event.movieId);
 
-      detail.fold(
-        (failure) => emit(MovieDetailError(failure.message)),
+      await detail.fold(
+        (failure) async => emit(MovieDetailError(failure.message)),
         (data) async {
           final watchListStatus = await getWatchListStatus.execute(data.id);
-          emit(MovieDetailLoaded(data, watchListStatus, [], null));
+          emit(MovieDetailLoaded(data, watchListStatus, null, null));
 
           final recommendations = await getRecommendations.execute(data.id);
-          recommendations.fold(
-            (failure) => emit(
+          await recommendations.fold(
+            (failure) async => emit(
               MovieDetailLoaded(data, watchListStatus, [], failure.message),
             ),
-            (recommendation) => emit(
+            (recommendation) async => emit(
               MovieDetailLoaded(data, watchListStatus, recommendation, null),
             ),
           );

@@ -1,6 +1,7 @@
 import 'package:about/about.dart';
 import 'package:core/common/utils.dart';
 import 'package:core/core.dart';
+import 'package:core/presentation/bloc/movie_detail_bloc/movie_detail_bloc.dart';
 import 'package:core/presentation/bloc/movie_now_playing/movie_now_playing_bloc.dart';
 import 'package:core/presentation/bloc/movie_popular/movie_popular_bloc.dart';
 import 'package:core/presentation/bloc/movie_top_rated/movie_top_rated_bloc.dart';
@@ -93,6 +94,9 @@ class MyApp extends StatelessWidget {
           create: (_) =>
               di.locator<MovieTopRatedBloc>()..add(MovieTopRatedInit()),
         ),
+        BlocProvider(
+          create: (_) => di.locator<MovieDetailBloc>(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -118,7 +122,7 @@ class MyApp extends StatelessWidget {
               return CupertinoPageRoute(builder: (_) => TopRatedMoviesPage());
             case TOP_RATED_TV_ROUTE:
               return CupertinoPageRoute(builder: (_) => TopRatedTvPage());
-            case MovieDetailPage.ROUTE_NAME:
+            case MOVIE_DETAIL_ROUTE:
               final id = settings.arguments as int;
               return MaterialPageRoute(
                 builder: (_) => MovieDetailPage(id: id),

@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/movie.dart';
 import '../../styles/text_styles.dart';
 import '../../utils/constants.dart';
-import 'movie_detail_page.dart';
 
 class HomeMoviePage extends StatelessWidget {
   @override
@@ -176,7 +175,7 @@ class MovieList extends StatelessWidget {
                 if (movie.isMovie) {
                   Navigator.pushNamed(
                     context,
-                    MovieDetailPage.ROUTE_NAME,
+                    MOVIE_DETAIL_ROUTE,
                     arguments: movie.id,
                   );
                 } else {

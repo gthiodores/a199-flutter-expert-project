@@ -22,6 +22,7 @@ import 'package:core/domain/usecases/remove_watchlist.dart';
 import 'package:core/domain/usecases/remove_watchlist_tv.dart';
 import 'package:core/domain/usecases/save_watchlist.dart';
 import 'package:core/domain/usecases/save_watchlist_tv.dart';
+import 'package:core/presentation/bloc/movie_detail_bloc/movie_detail_bloc.dart';
 import 'package:core/presentation/bloc/movie_now_playing/movie_now_playing_bloc.dart';
 import 'package:core/presentation/bloc/movie_popular/movie_popular_bloc.dart';
 import 'package:core/presentation/bloc/movie_top_rated/movie_top_rated_bloc.dart';
@@ -127,6 +128,10 @@ void init() {
   );
   locator.registerFactory(
     () => MovieTopRatedBloc(locator()),
+  );
+  locator.registerFactory(
+    () =>
+        MovieDetailBloc(locator(), locator(), locator(), locator(), locator()),
   );
 
   // use case
