@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:about/about.dart';
 import 'package:core/common/utils.dart';
 import 'package:core/core.dart';
@@ -5,6 +7,7 @@ import 'package:core/presentation/bloc/movie_detail_bloc/movie_detail_bloc.dart'
 import 'package:core/presentation/bloc/movie_now_playing/movie_now_playing_bloc.dart';
 import 'package:core/presentation/bloc/movie_popular/movie_popular_bloc.dart';
 import 'package:core/presentation/bloc/movie_top_rated/movie_top_rated_bloc.dart';
+import 'package:core/presentation/bloc/tv_detail/tv_detail_bloc.dart';
 import 'package:core/presentation/bloc/tv_now_playing/tv_now_playing_bloc.dart';
 import 'package:core/presentation/bloc/tv_popular/tv_popular_bloc.dart';
 import 'package:core/presentation/bloc/tv_top_rated/tv_top_rated_bloc.dart';
@@ -30,14 +33,23 @@ import 'package:core/utils/routes.dart';
 import 'package:ditonton/injection.dart' as di;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:search/presentation/bloc/search_bloc.dart';
 import 'package:search/presentation/bloc/search_tv_bloc.dart';
 import 'package:search/search.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   di.init();
+
+  SecurityContext(withTrustedRoots: false);
+  SecurityContext securityContext = SecurityContext.defaultContext;
+  final sslCert = await rootBundle.load('assets/certificates/tmdb.cer');
+  // Trust the certificate
+  securityContext.setTrustedCertificatesBytes(sslCert.buffer.asInt8List());
   runApp(MyApp());
 }
 
@@ -110,6 +122,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.locator<TvTopRatedBloc>()..add(TvTopRatedInit()),
         ),
+        BlocProvider(
+          create: (_) => di.locator<TvDetailBloc>(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -151,7 +166,7 @@ class MyApp extends StatelessWidget {
               return CupertinoPageRoute(builder: (_) => SearchPage());
             case SEARCH_TV_ROUTE:
               return CupertinoPageRoute(builder: (_) => SearchTvPage());
-            case WatchlistMoviesPage.ROUTE_NAME:
+            case WATCH_LIST_ROTUE:
               return MaterialPageRoute(builder: (_) => WatchlistMoviesPage());
             case ABOUT_ROUTE:
               return MaterialPageRoute(builder: (_) => AboutPage());

@@ -6,8 +6,6 @@ import 'package:core/domain/usecases/get_movie_recommendations.dart';
 import 'package:core/domain/usecases/get_watchlist_status.dart';
 import 'package:core/domain/usecases/remove_watchlist.dart';
 import 'package:core/domain/usecases/save_watchlist.dart';
-import 'package:core/utils/failure.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 part 'movie_detail_event.dart';
@@ -37,15 +35,17 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
         (failure) async => emit(MovieDetailError(failure.message)),
         (data) async {
           final watchListStatus = await getWatchListStatus.execute(data.id);
-          emit(MovieDetailLoaded(data, watchListStatus, null, null));
+          emit(MovieDetailLoaded(data, watchListStatus, null, null, null));
 
           final recommendations = await getRecommendations.execute(data.id);
           await recommendations.fold(
             (failure) async => emit(
-              MovieDetailLoaded(data, watchListStatus, [], failure.message),
+              MovieDetailLoaded(
+                  data, watchListStatus, [], failure.message, null),
             ),
             (recommendation) async => emit(
-              MovieDetailLoaded(data, watchListStatus, recommendation, null),
+              MovieDetailLoaded(
+                  data, watchListStatus, recommendation, null, null),
             ),
           );
         },
@@ -56,21 +56,29 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
       if (state is MovieDetailLoaded) {
         final loadedState = state as MovieDetailLoaded;
 
-        Either<Failure, String> result;
+        if (event.isFavorite) {
+          final result = await removeWatchlist.execute(loadedState.movie);
 
-        if (loadedState.isFavorite) {
-          result = await removeWatchlist.execute(loadedState.movie);
+          result.fold(
+            (failure) =>
+                emit(loadedState.copyWith(watchlistMessage: failure.message)),
+            (data) => emit(
+              loadedState.copyWith(
+                  message: data, isFavorite: !event.isFavorite),
+            ),
+          );
         } else {
-          result = await saveWatchlist.execute(loadedState.movie);
-        }
+          final result = await saveWatchlist.execute(loadedState.movie);
 
-        result.fold(
-          (failure) => emit(loadedState.copyWith(message: failure.message)),
-          (data) => emit(
-            loadedState.copyWith(
-                message: data, isFavorite: !loadedState.isFavorite),
-          ),
-        );
+          result.fold(
+            (failure) =>
+                emit(loadedState.copyWith(watchlistMessage: failure.message)),
+            (data) => emit(
+              loadedState.copyWith(
+                  message: data, isFavorite: !event.isFavorite),
+            ),
+          );
+        }
       }
     });
   }

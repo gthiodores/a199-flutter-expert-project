@@ -26,6 +26,7 @@ import 'package:core/presentation/bloc/movie_detail_bloc/movie_detail_bloc.dart'
 import 'package:core/presentation/bloc/movie_now_playing/movie_now_playing_bloc.dart';
 import 'package:core/presentation/bloc/movie_popular/movie_popular_bloc.dart';
 import 'package:core/presentation/bloc/movie_top_rated/movie_top_rated_bloc.dart';
+import 'package:core/presentation/bloc/tv_detail/tv_detail_bloc.dart';
 import 'package:core/presentation/bloc/tv_now_playing/tv_now_playing_bloc.dart';
 import 'package:core/presentation/bloc/tv_popular/tv_popular_bloc.dart';
 import 'package:core/presentation/bloc/tv_top_rated/tv_top_rated_bloc.dart';
@@ -133,8 +134,13 @@ void init() {
     () => MovieTopRatedBloc(locator()),
   );
   locator.registerFactory(
-    () =>
-        MovieDetailBloc(locator(), locator(), locator(), locator(), locator()),
+    () => MovieDetailBloc(
+      locator(),
+      locator(),
+      locator(),
+      locator(),
+      locator(),
+    ),
   );
   locator.registerFactory(
     () => TvNowPlayingBloc(locator()),
@@ -144,6 +150,15 @@ void init() {
   );
   locator.registerFactory(
     () => TvTopRatedBloc(locator()),
+  );
+  locator.registerFactory(
+    () => TvDetailBloc(
+      getTvDetail: locator(),
+      getTvRecommendations: locator(),
+      getWatchListStatus: locator(),
+      saveWatchlistTv: locator(),
+      removeWatchlistTv: locator(),
+    ),
   );
 
   // use case
