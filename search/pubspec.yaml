@@ -1,7 +1,7 @@
 name: search
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
+homepage: ''
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
@@ -15,6 +15,8 @@ dependencies:
   dartz: ^0.10.0
   flutter_bloc: ^8.0.0
   rxdart: ^0.27.3
+  firebase_core: ^1.15.0
+  firebase_crashlytics: ^2.6.3
 
 dev_dependencies:
   flutter_test:
@@ -23,6 +25,7 @@ dev_dependencies:
   mockito: ^5.0.8
   build_runner: ^2.0.4
   bloc_test: ^9.0.0
+  mocktail: ^0.3.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

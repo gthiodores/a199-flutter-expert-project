@@ -1,7 +1,7 @@
 name: about
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
+homepage: ''
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   core:
     path: ../core
+  firebase_core: ^1.15.0
+  firebase_crashlytics: ^2.6.3
 
 dev_dependencies:
   flutter_test:
