@@ -1,13 +1,16 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:core/core.dart';
+import 'package:core/domain/usecases/get_tv_top_rated.dart';
 import 'package:core/presentation/bloc/tv_top_rated/tv_top_rated_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../dummy_data/dummy_objects.dart';
-import '../../provider/top_rated_tv_notifier_test.mocks.dart';
+import 'tv_top_rated_bloc_test.mocks.dart';
 
+@GenerateMocks([GetTvTopRated])
 void main() {
   late MockGetTvTopRated usecase;
   late TvTopRatedBloc topRatedBloc;

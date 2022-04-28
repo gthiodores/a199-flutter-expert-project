@@ -1,13 +1,16 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:core/core.dart';
+import 'package:core/domain/usecases/get_tv_popular.dart';
 import 'package:core/presentation/bloc/tv_popular/tv_popular_bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../dummy_data/dummy_objects.dart';
-import '../../provider/popular_tv_notifier_test.mocks.dart';
+import 'tv_popular_bloc_test.mocks.dart';
 
+@GenerateMocks([GetTvPopular])
 void main() {
   late MockGetTvPopular usecase;
   late TvPopularBloc popularBloc;

@@ -32,15 +32,7 @@ import 'package:core/presentation/bloc/tv_detail/tv_detail_bloc.dart';
 import 'package:core/presentation/bloc/tv_now_playing/tv_now_playing_bloc.dart';
 import 'package:core/presentation/bloc/tv_popular/tv_popular_bloc.dart';
 import 'package:core/presentation/bloc/tv_top_rated/tv_top_rated_bloc.dart';
-import 'package:core/presentation/provider/movie_detail_notifier.dart';
-import 'package:core/presentation/provider/movie_list_notifier.dart';
-import 'package:core/presentation/provider/popular_movies_notifier.dart';
-import 'package:core/presentation/provider/popular_tv_notifier.dart';
-import 'package:core/presentation/provider/top_rated_movies_notifier.dart';
-import 'package:core/presentation/provider/top_rated_tv_notifier.dart';
-import 'package:core/presentation/provider/tv_detail_notifier.dart';
-import 'package:core/presentation/provider/tv_list_notifier.dart';
-import 'package:core/presentation/provider/watchlist_movie_notifier.dart';
+import 'package:core/presentation/bloc/watchlist_movie/watchlist_movie_bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/io_client.dart';
@@ -64,65 +56,6 @@ void init() {
     IOClient ioClient = IOClient(client);
     return ioClient;
   });
-
-  // provider
-  locator.registerFactory(
-    () => MovieListNotifier(
-      getNowPlayingMovies: locator(),
-      getPopularMovies: locator(),
-      getTopRatedMovies: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TvListNotifier(
-      locator(),
-      locator(),
-      locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => MovieDetailNotifier(
-      getMovieDetail: locator(),
-      getMovieRecommendations: locator(),
-      getWatchListStatus: locator(),
-      saveWatchlist: locator(),
-      removeWatchlist: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TvDetailNotifier(
-      locator(),
-      locator(),
-      locator(),
-      locator(),
-      locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => PopularMoviesNotifier(
-      locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => PopularTvNotifier(
-      locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TopRatedMoviesNotifier(
-      getTopRatedMovies: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TopRatedTvNotifier(
-      locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => WatchlistMovieNotifier(
-      getWatchlistMovies: locator(),
-    ),
-  );
 
   // bloc
   locator.registerFactory(
@@ -166,6 +99,9 @@ void init() {
       saveWatchlistTv: locator(),
       removeWatchlistTv: locator(),
     ),
+  );
+  locator.registerFactory(
+    () => WatchlistMovieBloc(locator()),
   );
 
   // use case

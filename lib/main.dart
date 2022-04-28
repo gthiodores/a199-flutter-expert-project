@@ -9,6 +9,7 @@ import 'package:core/presentation/bloc/tv_detail/tv_detail_bloc.dart';
 import 'package:core/presentation/bloc/tv_now_playing/tv_now_playing_bloc.dart';
 import 'package:core/presentation/bloc/tv_popular/tv_popular_bloc.dart';
 import 'package:core/presentation/bloc/tv_top_rated/tv_top_rated_bloc.dart';
+import 'package:core/presentation/bloc/watchlist_movie/watchlist_movie_bloc.dart';
 import 'package:core/presentation/pages/home_movie_page.dart';
 import 'package:core/presentation/pages/home_tv_page.dart';
 import 'package:core/presentation/pages/movie_detail_page.dart';
@@ -18,15 +19,6 @@ import 'package:core/presentation/pages/top_rated_movies_page.dart';
 import 'package:core/presentation/pages/top_rated_tv_page.dart';
 import 'package:core/presentation/pages/tv_detail_page.dart';
 import 'package:core/presentation/pages/watchlist_movies_page.dart';
-import 'package:core/presentation/provider/movie_detail_notifier.dart';
-import 'package:core/presentation/provider/movie_list_notifier.dart';
-import 'package:core/presentation/provider/popular_movies_notifier.dart';
-import 'package:core/presentation/provider/popular_tv_notifier.dart';
-import 'package:core/presentation/provider/top_rated_movies_notifier.dart';
-import 'package:core/presentation/provider/top_rated_tv_notifier.dart';
-import 'package:core/presentation/provider/tv_detail_notifier.dart';
-import 'package:core/presentation/provider/tv_list_notifier.dart';
-import 'package:core/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:core/utils/routes.dart';
 import 'package:ditonton/injection.dart' as di;
 import 'package:firebase_core/firebase_core.dart';
@@ -53,33 +45,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistMovieNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvDetailNotifier>(),
-        ),
         BlocProvider(
           create: (_) => di.locator<SearchBloc>(),
         ),
@@ -113,6 +78,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.locator<TvDetailBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<WatchlistMovieBloc>()
+            ..add(
+              FetchWatchlistMovies(DateTime.now().millisecondsSinceEpoch),
+            ),
         ),
       ],
       child: MaterialApp(
