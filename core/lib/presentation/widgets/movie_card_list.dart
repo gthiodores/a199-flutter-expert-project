@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../domain/entities/movie.dart';
 import '../../styles/text_styles.dart';
 import '../../utils/constants.dart';
-import '../pages/tv_detail_page.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -27,7 +26,7 @@ class MovieCard extends StatelessWidget {
           } else {
             Navigator.pushNamed(
               context,
-              TvDetailPage.ROUTE_NAME,
+              TV_DETAIL_ROUTE,
               arguments: movie.id,
             );
           }

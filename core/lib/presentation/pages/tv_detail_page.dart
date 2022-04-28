@@ -13,8 +13,6 @@ import '../../styles/text_styles.dart';
 import '../../utils/constants.dart';
 
 class TvDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/tv_detail';
-
   final int id;
 
   TvDetailPage({required this.id});

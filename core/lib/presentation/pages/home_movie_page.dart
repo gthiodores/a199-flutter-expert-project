@@ -181,7 +181,7 @@ class MovieList extends StatelessWidget {
                 } else {
                   Navigator.pushNamed(
                     context,
-                    TvDetailPage.ROUTE_NAME,
+                    TV_DETAIL_ROUTE,
                     arguments: movie.id,
                   );
                 }

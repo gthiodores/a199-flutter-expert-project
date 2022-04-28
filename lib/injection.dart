@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:core/data/datasources/db/database_helper.dart';
 import 'package:core/data/datasources/movie_local_data_source.dart';
 import 'package:core/data/datasources/movie_remote_data_source.dart';
@@ -39,8 +41,9 @@ import 'package:core/presentation/provider/top_rated_tv_notifier.dart';
 import 'package:core/presentation/provider/tv_detail_notifier.dart';
 import 'package:core/presentation/provider/tv_list_notifier.dart';
 import 'package:core/presentation/provider/watchlist_movie_notifier.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:search/presentation/bloc/search_bloc.dart';
 import 'package:search/presentation/bloc/search_tv_bloc.dart';
 import 'package:search/search.dart';
@@ -48,6 +51,20 @@ import 'package:search/search.dart';
 final locator = GetIt.instance;
 
 void init() {
+  // Http Client with SSL Pinning
+  locator.registerSingletonAsync(() async {
+    final sslCert = await rootBundle.load('assets/certificates/tmdb.cer');
+    SecurityContext securityContext = SecurityContext(withTrustedRoots: false);
+    securityContext.setTrustedCertificatesBytes(sslCert.buffer.asInt8List());
+
+    HttpClient client = HttpClient(context: securityContext);
+    client.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => false;
+
+    IOClient ioClient = IOClient(client);
+    return ioClient;
+  });
+
   // provider
   locator.registerFactory(
     () => MovieListNotifier(
@@ -171,31 +188,34 @@ void init() {
   locator.registerLazySingleton(() => RemoveWatchlistTv(locator()));
   locator.registerLazySingleton(() => SearchTv(locator()));
 
+  // helper
+  locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
+
+  // data sources
+  locator.registerSingletonWithDependencies<MovieRemoteDataSource>(
+    () => MovieRemoteDataSourceImpl(client: locator()),
+    dependsOn: [IOClient],
+  );
+  locator.registerLazySingleton<MovieLocalDataSource>(
+      () => MovieLocalDataSourceImpl(databaseHelper: locator()));
+  locator.registerSingletonWithDependencies<TvRemoteDataSource>(
+    () => TvRemoteDataSourceImpl(client: locator()),
+    dependsOn: [IOClient],
+  );
+
   // repository
-  locator.registerLazySingleton<MovieRepository>(
+  locator.registerSingletonWithDependencies<MovieRepository>(
     () => MovieRepositoryImpl(
       remoteDataSource: locator(),
       localDataSource: locator(),
     ),
+    dependsOn: [MovieRemoteDataSource],
   );
-  locator.registerLazySingleton<TvRepository>(
+  locator.registerSingletonWithDependencies<TvRepository>(
     () => TvRepositoryImpl(
       locator(),
       locator(),
     ),
+    dependsOn: [TvRemoteDataSource],
   );
-
-  // data sources
-  locator.registerLazySingleton<MovieRemoteDataSource>(
-      () => MovieRemoteDataSourceImpl(client: locator()));
-  locator.registerLazySingleton<MovieLocalDataSource>(
-      () => MovieLocalDataSourceImpl(databaseHelper: locator()));
-  locator.registerLazySingleton<TvRemoteDataSource>(
-      () => TvRemoteDataSourceImpl(client: locator()));
-
-  // helper
-  locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
-
-  // external
-  locator.registerLazySingleton(() => http.Client());
 }
