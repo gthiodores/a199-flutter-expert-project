@@ -29,6 +29,8 @@ class TvRepositoryImpl extends TvRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -41,6 +43,8 @@ class TvRepositoryImpl extends TvRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -53,6 +57,8 @@ class TvRepositoryImpl extends TvRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -65,6 +71,8 @@ class TvRepositoryImpl extends TvRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -103,6 +111,8 @@ class TvRepositoryImpl extends TvRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -115,6 +125,8 @@ class TvRepositoryImpl extends TvRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 }
